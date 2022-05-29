@@ -1,13 +1,15 @@
 ﻿@using Store.Models
 @inject SignInManager<User> signInManager
 @inject UserManager<User> userManager
-
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/backImage.css"/>
+<body class="backgroundImage">
 <header>
     <nav class="navbar navbar-expand-xl navbar-toggleable-xl navbar-light bg-white border-bottom box-shadow mb-3">
 
         <div class="container">
             <a class="navbar-brand" asp-controller="Store" asp-action="Index">
-                <img src="~/images/shoelogo-sm.png" width="45" height="30" class="d-inline-block align-top" alt="">
+                <img src="~/images/Earth.png" width="75" height="60" class="d-inline-block align-top" alt="">
                 RustamMarket
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -88,7 +90,7 @@
 
 
 </header>
-
+</body>
 
 <script>
 

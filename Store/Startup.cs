@@ -28,7 +28,6 @@ namespace Store
         public void ConfigureServices(IServiceCollection services)
         {
 
-            //Dodanie generatora swaggera, definicja dokumentu Swaggera
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -38,25 +37,25 @@ namespace Store
                     Description = "Store API v1",
                     Contact = new OpenApiContact
                     {
-                        Name = "Jakub Pietrus, Jakub Zatoс, Hubert Gуrski",
-                        Url = new Uri("https://github.com/pieetrus/.Net-i-Java/tree/master/Sklep-Projekt")
+                        Name = "Marat",
+                        Url = new Uri("https://github.com/sharifkulov/Store")
                     },
                 });
             });
 
 
-            //Dodanie automappera
+            
             services.AddAutoMapper(typeof(Startup));
 
 
-            //Konfiguracja Identity
+            
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<StoreContext>()
                 .AddDefaultTokenProviders();
 
 
 
-            //Konfiguracja wymagaс co do hasіa
+            
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequiredLength = 5;
@@ -68,13 +67,13 @@ namespace Store
 
 
 
-            //Dependency injection kontekstu bazy danych
+            //Dependency injection контекста базы данных
             services.AddDbContext<StoreContext>(opt =>opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
 
 
-            //Wymagana autoryzacja na wszystkich kontrolerach
+            //Требуется авторизация на всех контроллерах
             services.AddMvc(options =>
             {
                 var policy = new AuthorizationPolicyBuilder()
@@ -123,7 +122,7 @@ namespace Store
             app.UseRouting();
 
 
-            //Wі№czenie autentykacji, do rejestracji i logowania
+            //Проверка подлинности, регистрация и логин
             app.UseAuthentication();
 
             app.UseAuthorization();
