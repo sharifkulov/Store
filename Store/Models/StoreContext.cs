@@ -50,7 +50,6 @@ namespace Store.Models
 
 
 
-            //zmiana nazw tabel z domyślnych na ładniejsze
             modelBuilder.Entity<User>(i =>
             {
                 RelationalEntityTypeBuilderExtensions.ToTable((EntityTypeBuilder)i, "Users");
@@ -100,7 +99,7 @@ namespace Store.Models
                 .HasKey(x => new { x.StockId, x.OrderId });
 
 
-            //Dodanie płci do tabeli Gender
+
             modelBuilder.Entity<Gender>()
                 .HasData(
                     new Gender
@@ -122,7 +121,7 @@ namespace Store.Models
 
 
 
-            //Dodanie roli do tabeli Role
+
             modelBuilder.Entity<Role>()
                 .HasData(
                     new Role
@@ -142,7 +141,7 @@ namespace Store.Models
            
 
 
-            //Dodanie płci do tabeli Sex
+
             modelBuilder.Entity<Sex>()
                 .HasData(
                     new Gender
@@ -162,7 +161,7 @@ namespace Store.Models
                     }
                 );
 
-            //Dodanie typów do tabeli Type
+
             modelBuilder.Entity<Category>()
                 .HasData(
                     new Category
@@ -178,7 +177,6 @@ namespace Store.Models
                 );
 
 
-            //Dodanie marek do tabeli Brand
             modelBuilder.Entity<Brand>()
                 .HasData(
                     new Brand
@@ -207,7 +205,7 @@ namespace Store.Models
                     }
                 );
 
-            //Dodanie kolorów do tabeli Color
+
             modelBuilder.Entity<Color>()
                 .HasData(
                     new Color
@@ -248,7 +246,7 @@ namespace Store.Models
                 );
 
 
-            // Dodanie przykładowych produktów do tabeli Products
+
             modelBuilder.Entity<Product>()
                 .HasData(
                     new Product
@@ -338,7 +336,7 @@ namespace Store.Models
 
                 );
 
-            //Dodanie marek do tabeli Brand
+
             modelBuilder.Entity<Stock>()
                 .HasData(
                     new Stock

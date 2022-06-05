@@ -8,7 +8,6 @@ namespace Store.Models
 
         [Required]
         [Display(Name="Размер")]
-        // todo zabezpieczyć żeby jeden produkt mógł mieć tylko jeden element o danej nazwie
         public string Name { get; set; }
 
         [Required]

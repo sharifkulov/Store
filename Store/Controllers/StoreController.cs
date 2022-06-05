@@ -29,7 +29,10 @@ namespace Store.Controllers
         }
 
 
-
+        /// <summary>
+        /// Страница товаров
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Index()
@@ -232,7 +235,11 @@ namespace Store.Controllers
 
             return temp;
         }
-
+        /// <summary>
+        /// Страница подробности товара
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Details(int id)
@@ -265,7 +272,12 @@ namespace Store.Controllers
 
             return View(model[0]);
         }
-
+        /// <summary>
+        /// Страница 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="counter"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Cart(int id, int counter)
         {
@@ -288,7 +300,7 @@ namespace Store.Controllers
 
             qty--;
             HttpContext.Response.Cookies.Append("stock-" + id + "-qty", qty.ToString());
-            System.Diagnostics.Debug.WriteLine("Poprawne dodnie do koszyka");
+            System.Diagnostics.Debug.WriteLine("Правильно добавить в корзину");
             return Ok();
         }
 
@@ -302,10 +314,14 @@ namespace Store.Controllers
                 }
             }
 
-            throw new Exception("Nie znaleziono takiego ciasteczka");
+            throw new Exception("Такое печенье не найдено");
         }
 
-
+        /// <summary>
+        /// Удаление из корзины
+        /// </summary>
+        /// <param name="stockId"></param>
+        /// <returns></returns>
         public IActionResult DeleteFromCart(int stockId)
         {
             int.TryParse(HttpContext.Request.Cookies["counter"], out int counter);
@@ -317,7 +333,7 @@ namespace Store.Controllers
             //HttpContext.Response.Cookies.Delete("stock-" + id); 
             HttpContext.Response.Cookies.Append("counter", counter.ToString());
 
-            // todo odblokowywanie elementu w sklepie
+            // todo разблокировка элемента в магазине
             int.TryParse(HttpContext.Request.Cookies["stock-" + stockId + "-qty"], out int qty);
             HttpContext.Response.Cookies.Delete("stock-" + stockId + "-qty");
             qty++;
@@ -328,7 +344,10 @@ namespace Store.Controllers
             return Ok();
         }
 
-
+        /// <summary>
+        /// Страница корзины
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> Cart()
         {
@@ -352,7 +371,12 @@ namespace Store.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Страница покупки
+        /// </summary>
+        /// <param name="stripeEmail"></param>
+        /// <param name="stripeToken"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Payment(string stripeEmail, string stripeToken)
         {
@@ -402,7 +426,7 @@ namespace Store.Controllers
             System.Diagnostics.Debug.WriteLine($"Заказ пользователя {user.UserName} c id = {user.   Id}");
             
 
-            //można to zrobić mapperem ale trzeba go dokładnie skonfigurować
+            
             var order = new Order
             {
                 FirstName = user.FirstName,
@@ -457,7 +481,10 @@ namespace Store.Controllers
         }
 
 
-
+        /// <summary>
+        /// Страница информации о доставке
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult ShippingInformation()
         {
@@ -479,7 +506,11 @@ namespace Store.Controllers
             return View(viewModel);
         }
 
-
+        /// <summary>
+        /// Страница получения списка товаров
+        /// </summary>
+        /// <param name="counter"></param>
+        /// <returns></returns>
         public async Task<List<OrderProduct>> GetOrderProductsList(int counter)
         {
             var list = new List<OrderProduct>();
@@ -512,7 +543,10 @@ namespace Store.Controllers
 
             return list;
         }
-
+        /// <summary>
+        /// Страница информации о доставке
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> ShippingInformation(ShippingInformationModel model)
         {

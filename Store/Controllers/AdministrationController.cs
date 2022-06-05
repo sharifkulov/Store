@@ -53,7 +53,6 @@ namespace Store.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
-                //zabezpieczenie aby admin nie mógł usunąć i edytować swojego konta będąc zalogowanym
                 var userName = User.Identity.Name;
                 var user = await _userManager.FindByNameAsync(userName);
 
@@ -364,8 +363,6 @@ namespace Store.Controllers
 
 
                 var user = _userManager.FindByIdAsync(model.Id.ToString()).Result;
-
-                //za pomocą mappera można skrócić cały kod niżej do jedenj linijki
                 _mapper.Map(model, user);
                 user.PhotoPath = uniqueFileName;
 
@@ -636,7 +633,6 @@ namespace Store.Controllers
             {
                 var product = new Product();
 
-                // todo zrobić to z użyciem mappera
                 product.Id = model.Id;
                 product.CategoryId = model.CategoryId;
                 product.ColorId = model.ColorId;
@@ -763,7 +759,6 @@ namespace Store.Controllers
 
                 else
                 {
-                    // todo zrobić to z użyciem mappera
                     var brand = new Brand
                     {
                         Name = model.Name,

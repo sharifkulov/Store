@@ -32,7 +32,10 @@ namespace Store.Controllers
             _hostEnvironment = hostEnvironment;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// Регистрация переход
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Register()
@@ -45,7 +48,10 @@ namespace Store.Controllers
            
             return View(viewModel);
         }
-
+        /// <summary>
+        /// Авторизация переход
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
@@ -56,7 +62,12 @@ namespace Store.Controllers
             return View(viewModel);
 
         }
-
+        /// <summary>
+        /// СТраница Авторизациии
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
         [HttpPost]
@@ -67,15 +78,13 @@ namespace Store.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.UserName,
                     model.Password,model.RememberMe, false);
 
-                //czy poprawnie zalogowano
+                //правильно ли вы вошли в систему
                 if (result.Succeeded)
                 {
-                    //Zabezpieczone przed atakami przez przekieowanie na zewnętrzne strony
-                    //przez sprawdzenie czu returnurl jest url lokalnym
+                    
+                    
                     if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                     {
-                        //Gdy próbowano wejść w miejsce gdzie wymaga to zalogowania,
-                        //to po zalogowaniu przekieruje w to miejsce gdzie chcieliśmy wejść
                         return Redirect(returnUrl);
                     }
                     System.Diagnostics.Debug.WriteLine($"Пользователь {model.UserName} вошел в систему.");
@@ -87,7 +96,11 @@ namespace Store.Controllers
 
             return View("Login", model);
         }
-
+        /// <summary>
+        /// Страница регистрации
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -102,13 +115,12 @@ namespace Store.Controllers
 
                 var result = await _userManager.CreateAsync(user, model.Password);
 
-                //czy użytkownik został utworzony
                 if (result.Succeeded)
                 {
-                    //automatycznie dodaj nowego użytkownika do roli User
+                    
                     await _userManager.AddToRoleAsync(user, "User");
 
-                    //zaloguj od razu po rejestracji
+                    
                     await _signInManager.SignInAsync(user, isPersistent: false);
 
                     _context.SaveChanges();
@@ -129,18 +141,24 @@ namespace Store.Controllers
             return View("Register", model);
         }
 
-
+        /// <summary>
+        /// Выход из аккаунта
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
 
-            System.Diagnostics.Debug.WriteLine("Правильный выход");
+            System.Diagnostics.Debug.WriteLine("Вы успешно вышли");
             return RedirectToAction("Index", "Home");
         }
 
 
-
+        /// <summary>
+        /// Профиль пользователя
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Profile()
         {
              _signInManager.IsSignedIn(User);
@@ -156,7 +174,11 @@ namespace Store.Controllers
 
             return View(user);
         }
-
+        /// <summary>
+        /// Изменение профиля пользователя переход
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> EditProfile(int id)
         {
@@ -167,7 +189,11 @@ namespace Store.Controllers
             viewModel.Genders = _context.Genders.ToList();
             return View(viewModel);
         }
-
+        /// <summary>
+        /// Изменение профиля
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfile(UserFormViewModel model)
